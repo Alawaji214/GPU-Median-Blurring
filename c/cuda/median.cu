@@ -1,8 +1,12 @@
 #include <opencv2/opencv.hpp>
 
+
+#include <chrono>
 #include "common.h"
 #define KERNAL_SIZE 5
 #define KERNAL_TOTAL_SIZE KERNAL_SIZE * KERNAL_SIZE
+
+using namespace std::chrono;
 
 __global__ void _median_filter(u_int8_t *channel, u_int8_t *out_channel, int size_x, int size_y) {
     int row = blockIdx.y * blockDim.y + threadIdx.y; 
@@ -29,6 +33,8 @@ __global__ void _median_filter(u_int8_t *channel, u_int8_t *out_channel, int siz
 
 
     // Get median pixel value and assign to filteredImage
+    // std::nth_element(pixelValues.begin(), KERNAL_TOTAL_SIZE / 2, pixelValues.end());
+
     for (int i = 0; i < KERNAL_TOTAL_SIZE; i++) {
 	    for (int j = i + 1; j < KERNAL_TOTAL_SIZE; j++) {
 	        if (pixelValues[i] > pixelValues[j]) {
@@ -63,29 +69,6 @@ void median_filter_driver(u_int8_t *channel, u_int8_t *out_channel, int size_x, 
     CHECK_LAST_CUDA_ERROR();
 }
 
-// Function to apply median filter to a single channel
-// void applyMedianFilter(const cv::Mat& input, cv::Mat& output, int kernelSize) {
-//     int edge = kernelSize / 2;
-//     std::cout << "Inside Medail Fitler\n";
-
-//     input.
-
-//     for (int y = edge; y < input.rows - edge; y++) {
-//         for (int x = edge; x < input.cols - edge; x++) {
-//             std::cout << x << " " << y << "\n";
-//             std::vector<uchar> neighbors;
-//             for (int dy = -edge; dy <= edge; dy++) {
-//                 for (int dx = -edge; dx <= edge; dx++) {
-//                     neighbors.push_back(input.at<uchar>(y + dy, x + dx));
-//                 }
-//             }
-//             std::nth_element(neighbors.begin(), neighbors.begin() + neighbors.size() / 2, neighbors.end());
-//             output.at<uchar>(y, x) = neighbors[neighbors.size() / 2];
-//         }
-//     }
-// }
-
-
 int main() {
 
     try {
@@ -96,6 +79,9 @@ int main() {
         int N_Channels = 3; // Number of Channels
         int rows = image.rows;
         int cols = image.cols;
+
+        int gpu_device = -1;
+        cudaGetDevice(&gpu_device);
 
         cv::Mat frame, filteredFrame;
 
@@ -112,16 +98,17 @@ int main() {
 
         std::cout << "Start: copying channels" << std::endl;
 
+        auto start_cp = high_resolution_clock::now();
+
         for (int c = 0; c < N_Channels; c++) {
-            std::cout << "Aloc: Memory " << c << std::endl;
             cudaMallocManaged(&d_channels[c], sizeof(u_int8_t) * rows * cols);
             CHECK_LAST_CUDA_ERROR();
             cudaMallocManaged(&d_outputChannels[c], sizeof(u_int8_t) * rows * cols);
             CHECK_LAST_CUDA_ERROR();
 
-            std::cout << "Copy: Memory " << c << std::endl;
             if(channels[c].isContinuous()) {
-                cudaMemcpy(d_channels[c], channels[c].data, sizeof(u_int8_t) * rows*cols, cudaMemcpyHostToDevice);
+                cudaMemcpy(d_channels[c], channels[c].data, sizeof(u_int8_t) * rows * cols, cudaMemcpyHostToDevice);
+                cudaMemPrefetchAsync(d_channels[c], sizeof(u_int8_t) * rows * cols, gpu_device);
                 CHECK_LAST_CUDA_ERROR();
             }
             else {
@@ -129,30 +116,38 @@ int main() {
             }
         }
 
-
+        auto start_mf = high_resolution_clock::now();
         // Apply median filter to each channel
         for (int i = 0; i < N_Channels; i++) {
-            std::cout << "Apply: Median " << i << std::endl;
             median_filter_driver(d_channels[i], d_outputChannels[i], rows, cols);
+            cudaMemPrefetchAsync(d_outputChannels[i], sizeof(u_int8_t) * rows * cols, cudaCpuDeviceId);
         }
+        cudaDeviceSynchronize();
+        auto end_mf = high_resolution_clock::now();
 
         for (int i = 0; i < N_Channels; i++) {
-            std::cout << "Copy: Back " << i << std::endl;
             outputChannels[i] = cv::Mat(rows, cols, CV_8UC1);
             cudaMemcpy(outputChannels[i].data, d_outputChannels[i], sizeof(u_int8_t) * rows*cols, cudaMemcpyDeviceToHost);
             CHECK_LAST_CUDA_ERROR();
         }
 
+        auto end_cp = high_resolution_clock::now();
+
         // Merge the channels back
-        std::cout << "Merge" << std::endl;
         cv::merge(outputChannels, N_Channels, filteredFrame);
 
         // Save the frame after filtering
-        std::cout << "Save" << std::endl;
         std::string filenameAfter = "after.jpg";
         cv::imwrite(filenameAfter, filteredFrame);
         
-        std::cout << "Free" << std::endl;
+        std::cout << "End : Start Image Saving" << std::endl;
+
+        auto total_duration = duration_cast<microseconds>(end_cp - start_cp).count();
+        auto filter_duration = duration_cast<microseconds>(end_mf - start_mf).count();
+
+        std::cout << "total time    : " << total_duration << " us" << std::endl;
+        std::cout << "filter time   : " << filter_duration << " us" << std::endl;
+        std::cout << "mem time      : " << total_duration - filter_duration << " us" << std::endl;
         for (int c = 0; c < N_Channels; c++) {
             cudaFree(d_channels[c]);
             CHECK_LAST_CUDA_ERROR();
