@@ -40,13 +40,9 @@ def apply_median_filter(input_channel, kernel_size):
     # Define grid and block dimensions
     threadsperblock = (16, 16)
     # Calculate grid size to cover the whole image
-    blockspergrid_x = (256 + (threadsperblock[0] - 1)) // threadsperblock[0]
-    blockspergrid_y = (256 + (threadsperblock[1] - 1)) // threadsperblock[1]
+    blockspergrid_x = int(np.ceil(input_channel.shape[1] / threadsperblock[1]))
+    blockspergrid_y = int(np.ceil(input_channel.shape[0] / threadsperblock[0]))
     blockspergrid = (blockspergrid_x, blockspergrid_y)
-
-    # blockspergrid_x = int(np.ceil(input_channel.shape[1] / threadsperblock[1]))
-    # blockspergrid_y = int(np.ceil(input_channel.shape[0] / threadsperblock[0]))
-    # blockspergrid = (blockspergrid_x, blockspergrid_y)
 
     # Launch kernel
     apply_median_filter_cuda[blockspergrid, threadsperblock](input_channel_device, output_device, kernel_size)
