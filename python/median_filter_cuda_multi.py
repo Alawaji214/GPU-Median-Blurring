@@ -58,7 +58,7 @@ def main():
 
     # Split the image into its color channels
     channels = cv2.split(image)
-    
+
     start_time = time.time()
 
     # Apply median filter to each channel in parallel
@@ -76,8 +76,8 @@ def main():
     filtered_image = cv2.merge(filtered_channels)
 
     # Save the images before and after filtering
-    cv2.imwrite('before_cuda.jpg', image)
-    cv2.imwrite('after_cuda.jpg', filtered_image)
+    cv2.imwrite('before_cuda_multi.jpg', image)
+    cv2.imwrite('after_cuda_multi.jpg', filtered_image)
 
 if __name__ == "__main__":
     main()
