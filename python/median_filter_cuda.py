@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from numba import cuda
+from numba import cuda, uint8
 import time
 
 # Define maximum kernel size (must be odd)
@@ -14,7 +14,7 @@ def apply_median_filter_cuda(input_channel, output, kernel_size):
     edge = kernel_size // 2
     if x >= edge and y >= edge and x < input_channel.shape[1] - edge and y < input_channel.shape[0] - edge:
         # Statically allocated array for neighbors
-        neighbors = cuda.local.array(MAX_KERNEL_SIZE, dtype=numba.uint8)
+        neighbors = cuda.local.array(MAX_KERNEL_SIZE, dtype=uint8)
         count = 0
         for dy in range(-edge, edge + 1):
             for dx in range(-edge, edge + 1):
