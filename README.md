@@ -12,6 +12,8 @@ for python, you have to install opencv through pip
 
 ```bash
 pip3 install opencv-python
+pip3 install numba
+
 ```
 
 ### C
@@ -45,6 +47,7 @@ g++ -std=c++11 -I/usr/local/include/opencv4  -L/usr/local/lib -lopencv_core -lop
 ```
 cd python
 python median_filter.py 
+python median_filter_cuda.py 
 ```
 
 ## Results
