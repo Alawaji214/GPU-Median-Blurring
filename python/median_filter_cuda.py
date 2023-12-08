@@ -3,18 +3,33 @@ import numpy as np
 from numba import cuda
 import time
 
+# Define maximum kernel size (must be odd)
+MAX_KERNEL_SIZE = 25  # Example for 5x5 kernel
+assert MAX_KERNEL_SIZE % 2 == 1, "Kernel size must be odd"
+
 # CUDA kernel
 @cuda.jit
 def apply_median_filter_cuda(input_channel, output, kernel_size):
     x, y = cuda.grid(2)
     edge = kernel_size // 2
     if x >= edge and y >= edge and x < input_channel.shape[1] - edge and y < input_channel.shape[0] - edge:
-        neighbors = []
+        # Statically allocated array for neighbors
+        neighbors = cuda.local.array(MAX_KERNEL_SIZE, dtype=numba.uint8)
+        count = 0
         for dy in range(-edge, edge + 1):
             for dx in range(-edge, edge + 1):
-                neighbors.append(input_channel[y + dy, x + dx])
-        neighbors.sort()
-        output[y, x] = neighbors[len(neighbors) // 2]
+                neighbors[count] = input_channel[y + dy, x + dx]
+                count += 1
+        # Insertion sort to find the median
+        for i in range(1, count):
+            key = neighbors[i]
+            j = i - 1
+            while j >= 0 and key < neighbors[j]:
+                neighbors[j + 1] = neighbors[j]
+                j -= 1
+            neighbors[j + 1] = key
+        # Assign median value
+        output[y, x] = neighbors[count // 2]
 
 def apply_median_filter(input_channel, kernel_size):
     # Convert input to device array
@@ -35,7 +50,7 @@ def apply_median_filter(input_channel, kernel_size):
 
 def main():
     # Read the image
-    image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
+    image = cv2.imread('sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
 
     # Split the image into its color channels
     channels = cv2.split(image)
