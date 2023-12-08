@@ -56,6 +56,9 @@ def main():
     # Split the image into its color channels
     channels = cv2.split(image)
 
+    # Ensure that the CUDA context is initialized in the main thread before any multi-threaded operations.
+    dummy = cuda.device_array(1, dtype=np.uint8)
+
     start_time = time.time()
 
     # Apply median filter to each channel in parallel
