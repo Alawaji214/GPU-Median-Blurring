@@ -8,8 +8,8 @@ def apply_median_filter(input_channel, kernel_size):
     edge = kernel_size // 2
     # Initialize output with zeros (black edges)
     output = np.zeros_like(input_channel)
-    for y in range(edge, input_channel.shape[0] - edge):
-        for x in range(edge, input_channel.shape[1] - edge):
+    for x in range(edge, input_channel.shape[1] - edge):
+        for y in range(edge, input_channel.shape[0] - edge):
             neighbors = input_channel[y - edge:y + edge + 1, x - edge:x + edge + 1]
             output[y, x] = np.median(neighbors)
     return output
