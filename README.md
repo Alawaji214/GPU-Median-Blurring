@@ -43,3 +43,11 @@ or alternatively, you can use the following link to dirtectly build it
 ```bash
 g++ -std=c++11 -I/usr/local/include/opencv4  -L/usr/local/lib -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui median_filter.cpp -o median_filter
 ```
+
+
+## python
+
+```
+python python/median_filter.py 
+```
+
