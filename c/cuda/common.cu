@@ -1,9 +1,6 @@
-#ifndef COMMMON_H
-#define COMMMON_H
+#include "common.h"
+#include <iostream>
 
-#include "cuda.h"
-
-#define CHECK_LAST_CUDA_ERROR() checkLast(__FILE__, __LINE__)
 void checkLast(const char* const file, const int line)
 {
     cudaError_t err{cudaGetLastError()};
@@ -16,5 +13,3 @@ void checkLast(const char* const file, const int line)
         std::exit(EXIT_FAILURE);
     }
 };
-
-#endif /* COMMMON_H */

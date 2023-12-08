@@ -29,7 +29,9 @@ and then if everything run smothly, you can launch the application
 
 ```bash
 ./median #seq c
-./cuda_median #cuda c
+./image_cuda_median #cuda c
+./video_cuda_median #cuda c
+./video_cuda_median videos_2_1080p.mp4
 ```
 
 or alternatively, you can use the following link to dirtectly build it
