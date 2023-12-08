@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import time
+
 
 # Function to apply median filter to a single channel with black edges
 def apply_median_filter(input_channel, kernel_size):
@@ -19,9 +21,14 @@ def main():
     # Split the image into its color channels
     channels = cv2.split(image)
 
+    start_time = time.time()
+
     # Apply median filter to each channel
     filtered_channels = [apply_median_filter(ch, 5) for ch in channels]  # Kernel size is 5
 
+    end_time = time.time()
+    print(f"Filtering time: {end_time - start_time} seconds")
+    
     # Merge the channels back
     filtered_image = cv2.merge(filtered_channels)
 
