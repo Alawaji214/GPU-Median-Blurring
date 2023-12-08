@@ -8,7 +8,7 @@ void applyMedianFilter(const cv::Mat& input, cv::Mat& output, int kernelSize) {
     std::cout << "Inside Medail Fitler\n";
     for (int y = edge; y < input.rows - edge; y++) {
         for (int x = edge; x < input.cols - edge; x++) {
-            std::cout << x << " " << y << "\n";
+            // std::cout << x << " " << y << "\n";
             std::vector<uchar> neighbors;
             for (int dy = -edge; dy <= edge; dy++) {
                 for (int dx = -edge; dx <= edge; dx++) {
