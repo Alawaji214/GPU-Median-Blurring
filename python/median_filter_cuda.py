@@ -67,8 +67,8 @@ def main():
     filtered_image = cv2.merge(filtered_channels)
 
     # Save the images before and after filtering
-    cv2.imwrite('before.jpg', image)
-    cv2.imwrite('after.jpg', filtered_image)
+    cv2.imwrite('before_cuda.jpg', image)
+    cv2.imwrite('after_cuda.jpg', filtered_image)
 
 if __name__ == "__main__":
     main()
