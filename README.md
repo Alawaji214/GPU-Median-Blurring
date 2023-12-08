@@ -43,7 +43,8 @@ g++ -std=c++11 -I/usr/local/include/opencv4  -L/usr/local/lib -lopencv_core -lop
 ## Python
 
 ```
-python python/median_filter.py 
+cd python
+python median_filter.py 
 ```
 
 ## Results
