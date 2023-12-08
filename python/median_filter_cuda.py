@@ -35,7 +35,7 @@ def apply_median_filter(input_channel, kernel_size):
 
 def main():
     # Read the image
-    image = cv2.imread('sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
+    image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
 
     # Split the image into its color channels
     channels = cv2.split(image)
