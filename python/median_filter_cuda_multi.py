@@ -50,24 +50,24 @@ def apply_median_filter(input_channel, kernel_size):
     return output_device.copy_to_host()
 
 def main():
+    # Simple CUDA operation to initialize CUDA context
+    # Ensure that the CUDA context is initialized in the main thread before any multi-threaded operations.
+    dummy_cuda_array = cuda.device_array((1, 1), dtype=np.uint8)
     # Read the image
     image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
 
     # Split the image into its color channels
     channels = cv2.split(image)
-
-    # Ensure that the CUDA context is initialized in the main thread before any multi-threaded operations.
-    dummy = cuda.device_array(1, dtype=np.uint8)
-
+    
     start_time = time.time()
 
     # Apply median filter to each channel in parallel
-    # with ThreadPoolExecutor() as executor:
-    #     futures = [executor.submit(apply_median_filter, ch, 5) for ch in channels]
-    #     filtered_channels = [future.result() for future in futures] 
+    with ThreadPoolExecutor() as executor:
+        futures = [executor.submit(apply_median_filter, ch, 5) for ch in channels]
+        filtered_channels = [future.result() for future in futures] 
     
     # Apply median filter to each channel
-    filtered_channels = [apply_median_filter(ch, 5) for ch in channels]  # Kernel size is 5
+    # filtered_channels = [apply_median_filter(ch, 5) for ch in channels]  # Kernel size is 5
 
     end_time = time.time()
     print(f"Filtering time: {end_time - start_time} seconds")
