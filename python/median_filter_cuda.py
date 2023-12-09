@@ -9,7 +9,7 @@ MAX_KERNEL_SIZE = 25  # Example for 5x5 kernel
 assert MAX_KERNEL_SIZE % 2 == 1, "Kernel size must be odd"
 
 # CUDA kernel
-@cuda.jit
+@cuda.jit(device=True)
 def apply_median_filter_cuda(input_channel, output, kernel_size):
     x, y = cuda.grid(2)
     edge = kernel_size // 2
