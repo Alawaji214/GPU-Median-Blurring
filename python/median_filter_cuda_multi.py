@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from numba import cuda, uint8
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor,ProcessPoolExecutor
 
 # Define maximum kernel size (must be odd)
 MAX_KERNEL_SIZE = 25  # Example for 5x5 kernel
@@ -62,9 +62,11 @@ def main():
     start_time = time.time()
 
     # Apply median filter to each channel in parallel
-    with ThreadPoolExecutor() as executor:
-        futures = [executor.submit(apply_median_filter, ch, 5) for ch in channels]
-        filtered_channels = [future.result() for future in futures] 
+    with ProcessPoolExecutor() as executor:
+      filtered_channels = list(executor.map(apply_median_filter, channels, [5] * len(channels)))
+    # with ThreadPoolExecutor() as executor:
+    #     futures = [executor.submit(apply_median_filter, ch, 5) for ch in channels]
+    #     filtered_channels = [future.result() for future in futures] 
     
     # Apply median filter to each channel
     # filtered_channels = [apply_median_filter(ch, 5) for ch in channels]  # Kernel size is 5
