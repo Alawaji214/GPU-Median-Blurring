@@ -56,7 +56,7 @@ def apply_median_filter(input_channel, kernel_size):
 def main():
     # Simple CUDA operation to initialize CUDA context
     # Ensure that the CUDA context is initialized in the main thread before any multi-threaded operations.
-    dummy_cuda_array = cuda.device_array((1, 1), dtype=np.uint8)
+    # dummy_cuda_array = cuda.device_array((1, 1), dtype=np.uint8)
     # Read the image
     image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
 
