@@ -33,6 +33,10 @@ def apply_median_filter_cuda(input_channel, output, kernel_size):
         output[y, x] = neighbors[count // 2]
 
 def apply_median_filter(input_channel, kernel_size):
+
+    # Initialize CUDA in the worker process
+    cuda.select_device(0)  # Selects the first CUDA device. Adjust if you have multiple devices.
+
     # Convert input to device array
     input_channel_device = cuda.to_device(input_channel)
     output_device = cuda.device_array(input_channel.shape, dtype=np.uint8)
