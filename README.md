@@ -164,5 +164,5 @@ nsys profile --stats=true ./cuda_median
 | Seq C      | 0.73 sec   |             |                   |
 | Seq Python | 2.8 sec    |             |                   |
 | CUDA C     | 0.118 sec  | 0.001 sec   | 0.116 sec         |
-| OpenACC    |            |             |                   |
+| OpenACC    | 1.367 ms   | 1.171 ms    | 0.042 ms          |
 | CUDA Pythn | 0.37 sec   |             |                   |
