@@ -51,7 +51,6 @@ python median_filter_jit.py ../resources/noise_intro_2.jpg
 python median_filter_multi.py ../resources/noise_intro_2.jpg
 python median_filter_opencv.py ../resources/noise_intro_2.jpg
 python median_filter_cuda.py ../resources/noise_intro_2.jpg
-python median_filter_cuda_jit.py ../resources/noise_intro_2.jpg
 python median_filter_cuda_multi.py ../resources/noise_intro_2.jpg
 ```
 

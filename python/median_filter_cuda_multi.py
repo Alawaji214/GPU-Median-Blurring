@@ -34,7 +34,6 @@ def apply_median_filter_cuda(input_channel, output, kernel_size):
         # Assign median value
         output[y, x] = neighbors[count // 2]
 
-@jit(nopython=True)  # Use Just-In-Time compilation with Numba
 def apply_median_filter(input_channel, kernel_size):
 
     # Initialize CUDA in the worker process
