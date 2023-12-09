@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import time
+import argparse
 
 
 # Function to apply median filter to a single channel with black edges
@@ -15,8 +16,16 @@ def apply_median_filter(input_channel, kernel_size):
     return output
 
 def main():
-    # Read the image
-    image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
+    parser = argparse.ArgumentParser(description='Apply median filter to an image.')
+    parser.add_argument('image_file', help='Path to the image file')
+
+    args = parser.parse_args()
+
+    # Read the image using the provided file path
+    image_file_name = args.image_file
+    image = cv2.imread(image_file_name, cv2.IMREAD_COLOR)
+    # # Read the image
+    # image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
 
     # Split the image into its color channels
     channels = cv2.split(image)

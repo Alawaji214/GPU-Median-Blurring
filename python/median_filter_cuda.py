@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from numba import cuda, uint8
 import time
-from concurrent.futures import ThreadPoolExecutor
+import argparse
 
 # Define maximum kernel size (must be odd)
 MAX_KERNEL_SIZE = 25  # Example for 5x5 kernel
@@ -51,8 +51,16 @@ def apply_median_filter(input_channel, kernel_size):
     return output_device.copy_to_host()
 
 def main():
+    parser = argparse.ArgumentParser(description='Apply median filter to an image.')
+    parser.add_argument('image_file', help='Path to the image file')
+
+    args = parser.parse_args()
+
+    # Read the image using the provided file path
+    image_file_name = args.image_file
+    image = cv2.imread(image_file_name, cv2.IMREAD_COLOR)
     # Read the image
-    image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
+    # image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
 
     # Split the image into its color channels
     channels = cv2.split(image)
@@ -61,11 +69,6 @@ def main():
     dummy = cuda.device_array(1, dtype=np.uint8)
 
     start_time = time.time()
-
-    # Apply median filter to each channel in parallel
-    # with ThreadPoolExecutor() as executor:
-    #     futures = [executor.submit(apply_median_filter, ch, 5) for ch in channels]
-    #     filtered_channels = [future.result() for future in futures] 
     
     # Apply median filter to each channel
     filtered_channels = [apply_median_filter(ch, 5) for ch in channels]  # Kernel size is 5

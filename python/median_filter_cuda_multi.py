@@ -4,6 +4,7 @@ from numba import cuda, uint8
 import time
 from concurrent.futures import ThreadPoolExecutor,ProcessPoolExecutor
 from multiprocess import Pool
+import argparse
 
 # Define maximum kernel size (must be odd)
 MAX_KERNEL_SIZE = 25  # Example for 5x5 kernel
@@ -58,8 +59,17 @@ def main():
     # Simple CUDA operation to initialize CUDA context
     # Ensure that the CUDA context is initialized in the main thread before any multi-threaded operations.
     # dummy_cuda_array = cuda.device_array((1, 1), dtype=np.uint8)
+
+    parser = argparse.ArgumentParser(description='Apply median filter to an image.')
+    parser.add_argument('image_file', help='Path to the image file')
+
+    args = parser.parse_args()
+
+    # Read the image using the provided file path
+    image_file_name = args.image_file
+    image = cv2.imread(image_file_name, cv2.IMREAD_COLOR)
     # Read the image
-    image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
+    # image = cv2.imread('../resources/sp_img_gray_noise_heavy.png', cv2.IMREAD_COLOR)
 
     # Split the image into its color channels
     channels = cv2.split(image)
