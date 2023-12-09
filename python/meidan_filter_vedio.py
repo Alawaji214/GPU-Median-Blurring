@@ -3,6 +3,7 @@ import numpy as np
 from numba import cuda
 import time
 from median_filter_jit import apply_median_filter
+import argparse
 
 KERNAL_SIZE = 5
 KERNAL_TOTAL_SIZE = KERNAL_SIZE * KERNAL_SIZE
@@ -24,12 +25,19 @@ def median_filter(frame):
     # This is a placeholder as the actual GPU-accelerated implementation is non-trivial
     return cv2.medianBlur(frame, KERNAL_SIZE)
 
-def main(video_name="videos_2_1080p.mp4"):
+def main():
+    parser = argparse.ArgumentParser(description='Apply median filter to an vedio.')
+    parser.add_argument('vedio_file', help='Path to the vedio file')
+
+    args = parser.parse_args()
+
+    # Read the vedio using the provided file path
+    vedio_file_name = args.vedio_file
     try:
         print("Start: Program")
 
         # Open video file
-        capture = cv2.VideoCapture("../resources/video/" + video_name)
+        capture = cv2.VideoCapture(vedio_file_name)
         if not capture.isOpened():
             print("Error opening video file")
             return -1
@@ -38,7 +46,7 @@ def main(video_name="videos_2_1080p.mp4"):
         frame_height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
         # Setup VideoWriter
-        output = cv2.VideoWriter("output_" + video_name, cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width, frame_height))
+        output = cv2.VideoWriter("output_" + vedio_file_name[vedio_file_name.rfind('/')+1:], cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width, frame_height))
 
         print("Start: Video")
         start_total = time.time()

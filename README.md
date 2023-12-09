@@ -52,6 +52,9 @@ python median_filter_multi.py ../resources/noise_intro_2.jpg
 python median_filter_opencv.py ../resources/noise_intro_2.jpg
 python median_filter_cuda.py ../resources/noise_intro_2.jpg
 python median_filter_cuda_multi.py ../resources/noise_intro_2.jpg
+
+python meidan_filter_vedio.py ../resources/video/videos_1_1080p.mp4
+python meidan_filter_vedio_cuda.py python meidan_filter_vedio.py ../resources/video/videos_1_1080p.mp4
 ```
 
 ## Results
