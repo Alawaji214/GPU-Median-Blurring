@@ -33,9 +33,7 @@ def apply_median_filter_cuda(input_channel, output, kernel_size):
         output[y, x] = neighbors[count // 2]
 
 @jit(nopython=True)  # Use Just-In-Time compilation with Numba
-def apply_median_filter(input_channel_device, kernel_size):
-    # Convert input to device array
-    output_device = cuda.device_array(input_channel_device.shape, dtype=np.uint8)
+def apply_median_filter(input_channel_device, kernel_size, output_device):
 
     # Define grid and block dimensions
     threadsperblock = (16, 16)
@@ -48,7 +46,7 @@ def apply_median_filter(input_channel_device, kernel_size):
     apply_median_filter_cuda[blockspergrid, threadsperblock](input_channel_device, output_device, kernel_size)
     
     # Copy the result back to host
-    return output_device.copy_to_host()
+    # return output_device.copy_to_host()
 
 def main():
     parser = argparse.ArgumentParser(description='Apply median filter to an image.')
@@ -73,8 +71,11 @@ def main():
     # Apply median filter to each channel
     filtered_channels = []
     for ch in channels:
+        #convert input into device array
         input_channel_device = cuda.to_device(ch)
-        filtered_channel = apply_median_filter(input_channel_device, 5)  # Kernel size is 5
+        output_device = cuda.device_array(input_channel_device.shape, dtype=np.uint8)
+        apply_median_filter(input_channel_device, 5, output_device)  # Kernel size is 5
+        filtered_channel = output_device.copy_to_host()
         filtered_channels.append(filtered_channel)
 
     end_time = time.time()
