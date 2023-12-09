@@ -46,8 +46,12 @@ g++ -std=c++11 -I/usr/local/include/opencv4  -L/usr/local/lib -lopencv_core -lop
 
 ```
 cd python
-python median_filter.py 
-python median_filter_cuda.py 
+python median_filter.py ../resources/noise_intro_2.jpg
+python median_filter_jit.py ../resources/noise_intro_2.jpg
+python median_filter_multi.py ../resources/noise_intro_2.jpg
+python median_filter_opencv.py ../resources/noise_intro_2.jpg
+python median_filter_cuda.py ../resources/noise_intro_2.jpg
+python median_filter_cuda_multi.py ../resources/noise_intro_2.jpg
 ```
 
 ## Results
