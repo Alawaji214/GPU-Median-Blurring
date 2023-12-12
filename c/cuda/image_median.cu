@@ -1,20 +1,27 @@
 #include <opencv2/opencv.hpp>
 
-
 #include <chrono>
+#include <string>
 #include "common.h"
 #include "median.h"
 #define KERNAL_SIZE 5
 #define KERNAL_TOTAL_SIZE KERNAL_SIZE * KERNAL_SIZE
 
+using namespace std;
 using namespace std::chrono;
 
-int main() {
+int main(int argc, char *argv[]) {
 
     try {
         std::cout << "Start: Program" << std::endl;
 
-        cv::Mat image = cv::imread("resources/sp_img_gray_noise_heavy.png", cv::IMREAD_COLOR);
+        string image_name;
+        if(argc > 1)
+            image_name = argv[1];
+        else
+            image_name = "sp_img_gray_noise_heavy.png";
+
+        cv::Mat image = cv::imread("resources/" + image_name, cv::IMREAD_COLOR);
 
         int N_Channels = 3; // Number of Channels
         int rows = image.rows;
@@ -47,7 +54,7 @@ int main() {
             CHECK_LAST_CUDA_ERROR();
 
             if(channels[c].isContinuous()) {
-                cudaMemcpy(d_channels[c], channels[c].data, sizeof(u_int8_t) * rows * cols, cudaMemcpyHostToDevice);
+                cudaMemcpyAsync(d_channels[c], channels[c].data, sizeof(u_int8_t) * rows * cols, cudaMemcpyHostToDevice);
                 cudaMemPrefetchAsync(d_channels[c], sizeof(u_int8_t) * rows * cols, gpu_device);
                 CHECK_LAST_CUDA_ERROR();
             }
@@ -55,6 +62,7 @@ int main() {
                 std::cout << "Error: Not Continuous" << std::endl;
             }
         }
+        cudaDeviceSynchronize();
 
         auto start_mf = high_resolution_clock::now();
         // Apply median filter to each channel
@@ -70,6 +78,7 @@ int main() {
             cudaMemcpyAsync(outputChannels[i].data, d_outputChannels[i], sizeof(u_int8_t) * rows*cols, cudaMemcpyDeviceToHost);
             CHECK_LAST_CUDA_ERROR();
         }
+        cudaDeviceSynchronize();
 
         auto end_cp = high_resolution_clock::now();
 
