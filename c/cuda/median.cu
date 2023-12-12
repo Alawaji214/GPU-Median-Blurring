@@ -63,7 +63,7 @@ void median_filter_driver(u_int8_t *channel, u_int8_t *out_channel, int size_x, 
             blocksPerGrid.y = ceil(double(size_y)/double(threadsPerBlock.y));           
         }
         threadsPerBlock.x = ceil(maxthreadperblock / threadsPerBlock.y);
-        blocksPerGrid.x = ceil(double(size_y)/double(threadsPerBlock.x));
+        blocksPerGrid.x = ceil(double(size_x)/double(threadsPerBlock.x));
     }
 
     _median_filter<<<blocksPerGrid,threadsPerBlock>>>(channel,out_channel, size_x, size_y);
