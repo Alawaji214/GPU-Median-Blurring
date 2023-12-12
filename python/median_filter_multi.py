@@ -39,12 +39,12 @@ def main():
     start_time = time.time()
 
     # Apply median filter to each channel
-    with ProcessPoolExecutor() as executor:
-      filtered_channels = list(executor.map(apply_median_filter, channels, [5] * len(channels)))
+    # with ProcessPoolExecutor() as executor:
+    #   filtered_channels = list(executor.map(apply_median_filter, channels, [5] * len(channels)))
     # filtered_channels = [apply_median_filter(ch, 5) for ch in channels]  # Kernel size is 5
-    # with ThreadPoolExecutor() as executor:
-        # futures = [executor.submit(apply_median_filter, ch, 5) for ch in channels]
-        # filtered_channels = [future.result() for future in futures] 
+    with ThreadPoolExecutor() as executor:
+        futures = [executor.submit(apply_median_filter, ch, 5) for ch in channels]
+        filtered_channels = [future.result() for future in futures] 
     end_time = time.time()
     print(f"Filtering time: {end_time - start_time} seconds")
     

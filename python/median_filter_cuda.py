@@ -38,7 +38,7 @@ def apply_median_filter(input_channel, kernel_size):
     output_device = cuda.device_array(input_channel.shape, dtype=np.uint8)
 
     # Define grid and block dimensions
-    threadsperblock = (16, 16)
+    threadsperblock = (32, 32)
     # Calculate grid size to cover the whole image
     blockspergrid_x = int(np.ceil(input_channel.shape[1] / threadsperblock[1]))
     blockspergrid_y = int(np.ceil(input_channel.shape[0] / threadsperblock[0]))
