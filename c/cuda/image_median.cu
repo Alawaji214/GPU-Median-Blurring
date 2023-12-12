@@ -60,6 +60,7 @@ int main(int argc, char *argv[]) {
             }
             else {
                 std::cout << "Error: Not Continuous" << std::endl;
+                exit(-1);
             }
         }
         cudaDeviceSynchronize();
@@ -71,10 +72,15 @@ int main(int argc, char *argv[]) {
             cudaMemPrefetchAsync(d_outputChannels[i], sizeof(u_int8_t) * rows * cols, cudaCpuDeviceId);
         }
         cudaDeviceSynchronize();
+        CHECK_LAST_CUDA_ERROR();
         auto end_mf = high_resolution_clock::now();
 
         for (int i = 0; i < N_Channels; i++) {
             outputChannels[i] = cv::Mat(rows, cols, CV_8UC1);
+            if (!outputChannels[i].isContinuous()) {
+                std::cout << "Error: Not Continuous" << std::endl;
+                exit(-1);
+            }
             cudaMemcpyAsync(outputChannels[i].data, d_outputChannels[i], sizeof(u_int8_t) * rows*cols, cudaMemcpyDeviceToHost);
             CHECK_LAST_CUDA_ERROR();
         }

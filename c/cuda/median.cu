@@ -14,11 +14,12 @@ __global__ void _median_filter(u_int8_t *channel, u_int8_t *out_channel, int siz
 
     int edge = KERNAL_SIZE / 2;
     
-    if( col > size_y || row > size_x) 
+    if( col >= size_y || row >= size_x) 
         return;
     
-    if(row < edge || row > size_x - edge || col < edge || col > size_y - edge){
+    if(row < edge || row >= size_x - edge || col < edge || col >= size_y - edge){
         // out_channel[row * size_y + col] = channel[row * size_y + col];
+        out_channel[row * size_y + col] = 0;
         return ;
     }
     
