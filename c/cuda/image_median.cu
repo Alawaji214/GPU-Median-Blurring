@@ -67,7 +67,7 @@ int main() {
 
         for (int i = 0; i < N_Channels; i++) {
             outputChannels[i] = cv::Mat(rows, cols, CV_8UC1);
-            cudaMemcpy(outputChannels[i].data, d_outputChannels[i], sizeof(u_int8_t) * rows*cols, cudaMemcpyDeviceToHost);
+            cudaMemcpyAsync(outputChannels[i].data, d_outputChannels[i], sizeof(u_int8_t) * rows*cols, cudaMemcpyDeviceToHost);
             CHECK_LAST_CUDA_ERROR();
         }
 

@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
             // copy the channels to the device
             for(int c = 0; c < N_Channels; c++) {
                 if(channels[c].isContinuous()) {
-                    cudaMemcpy(d_channels[c], channels[c].data, sizeof(u_int8_t) * frame_height * frame_width, cudaMemcpyHostToDevice);
+                    cudaMemcpyAsync(d_channels[c], channels[c].data, sizeof(u_int8_t) * frame_height * frame_width, cudaMemcpyHostToDevice);
                     cudaMemPrefetchAsync(d_channels[c], sizeof(u_int8_t) * frame_height * frame_width, gpu_device);
                     CHECK_LAST_CUDA_ERROR();
                 }
@@ -82,6 +82,7 @@ int main(int argc, char *argv[]) {
                     std::cout << "Error: Not Continuous" << std::endl;
                 }
             }
+            cudaDeviceSynchronize();
 
             // Apply median filter to each channel
             for (int c = 0; c < N_Channels; c++) {
@@ -92,7 +93,7 @@ int main(int argc, char *argv[]) {
 
             // copy back the result
             for (int c = 0; c < N_Channels; c++) {
-                cudaMemcpy(outputChannels[c].data, d_outputChannels[c], sizeof(u_int8_t) * frame_height * frame_width, cudaMemcpyDeviceToHost);
+                cudaMemcpyAsync(outputChannels[c].data, d_outputChannels[c], sizeof(u_int8_t) * frame_height * frame_width, cudaMemcpyDeviceToHost);
                 CHECK_LAST_CUDA_ERROR();
             }
 
