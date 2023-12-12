@@ -46,15 +46,15 @@ g++ -std=c++11 -I/usr/local/include/opencv4  -L/usr/local/lib -lopencv_core -lop
 
 ```
 cd python
-python median_filter.py ../resources/noise_intro_2.jpg
-python median_filter_jit.py ../resources/noise_intro_2.jpg
-python median_filter_multi.py ../resources/noise_intro_2.jpg
-python median_filter_opencv.py ../resources/noise_intro_2.jpg
-python median_filter_cuda.py ../resources/noise_intro_2.jpg
-python median_filter_cuda_multi.py ../resources/noise_intro_2.jpg
+nsys profile --stats=true python median_filter.py ../resources/noise_intro_2.jpg
+nsys profile --stats=true python median_filter_jit.py ../resources/noise_intro_2.jpg
+nsys profile --stats=true python median_filter_multi.py ../resources/noise_intro_2.jpg
+nsys profile --stats=true python median_filter_opencv.py ../resources/noise_intro_2.jpg
+nsys profile --stats=true python median_filter_cuda.py ../resources/noise_intro_2.jpg
+nsys profile --stats=true python median_filter_cuda_multi.py ../resources/noise_intro_2.jpg
 
-python meidan_filter_vedio.py ../resources/video/videos_1_1080p.mp4
-python meidan_filter_vedio_cuda.py ../resources/video/videos_1_1080p.mp4
+nsys profile --stats=true python meidan_filter_vedio.py ../resources/video/videos_1_1080p.mp4
+nsys profile --stats=true python meidan_filter_vedio_cuda.py ../resources/video/videos_1_1080p.mp4
 ```
 
 ## Results
