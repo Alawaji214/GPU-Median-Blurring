@@ -129,13 +129,12 @@ void applyMedianFilter4(uchar *input, uchar *output, int rows, int cols, int ker
     int edge = kernelSize / 2;
     int windowSize = kernelSize * kernelSize;
     uchar neighbors[windowSize];
-    // #pragma acc data copyin(input[0:rows*cols]) copyout(output[0:rows*cols])
     {
 #pragma acc parallel loop collapse(2) \
     copyin(input[0 : rows * cols]) \
     copyout(output[0 : rows * cols]) \
     private(neighbors) \
-    num_gangs(132) /* 4 times the number of SMs to keep the GPU busy */ \
+    num_gangs(232) /* 4 times the number of SMs to keep the GPU busy */ \
     num_workers(32) /* One worker per warp */ \
     vector_length(32) /* Equal to the warp size */
         for (int y = edge; y < rows - edge; y++)
@@ -154,14 +153,10 @@ void applyMedianFilter4(uchar *input, uchar *output, int rows, int cols, int ker
 
                 uchar median = findMedian(neighbors, windowSize);
                 output[y * cols + x] = median;
-                //printf("GPU (%d,%d) : %d\n", x, y, output[y * cols + x]);
             }
         }
 
-        // #pragma acc wait
     }
-    // #pragma acc wait
-    // #pragma acc update host(output[0:rows*cols])
 
 }
 
