@@ -283,4 +283,4 @@ nsys profile --stats=true ./cuda_median
 
 ## License
 
-This project is licensed under the terms of the custom license. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the terms of the custom license. See the [LICENSE](LICENSE.md) file for details.
