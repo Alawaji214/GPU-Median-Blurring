@@ -2,11 +2,27 @@
 
 ## Building
 
+### Requirements
+
+- OpenCV library
+- Python and pip
+- Nvidia GPU ( this readme assumses Nvidia L4)
+
+#### Additional Requirements
+For building and running CUDA and OpenACC versions, ensure the following are installed:
+
+- [CUDA Toolkit (version 11.8 or above)](https://developer.nvidia.com/cuda-downloads)
+- [NVIDIA HPC SDK](https://developer.nvidia.com/hpc-sdk)
+
+**Note**: Please make sure to add all dependencies to your PATH.
+
+#### OpenCV Installation
 install opencv library
 
 ```bash
 sudo apt install libopencv-dev
 ```
+#### Pything Libraries 
 
 for python, you have to install opencv through pip
 
@@ -18,6 +34,33 @@ pip3 install numba
 
 ### C
 
+#### OpenACC
+
+To compile and run the OpenACC version:
+
+Navigate to the OpenACC directory:
+
+```bash
+cd c/openacc
+```
+compile the application
+```bash
+nvc++ -acc -gpu=cc89 -Minfo=acc -I/usr/include/opencv4 -L/usr/lib -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui median_filter.cpp -o median_filter_gpu
+./median_filter_gpu
+```
+Or, for passing the image name as an argument:
+
+```bash
+nvc++ -acc -gpu=cc89 -Minfo=acc -I/usr/include/opencv4 -L/usr/lib -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui median_filter_args.cpp -o median_filter_gpu_args
+./median_filter_gpu_args <imageName>
+```
+To profile the OpenACC application:
+
+```bash
+Copy code
+nsys profile -t openacc -b dwarf --stats=true ./median_filter
+```
+#### Cuda
 goto c directary and use cmake to build the application
 
 ```bash
