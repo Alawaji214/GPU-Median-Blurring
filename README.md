@@ -44,14 +44,16 @@ g++ -std=c++11 -I/usr/local/include/opencv4  -L/usr/local/lib -lopencv_core -lop
 
 ## Python
 
+nosiy image:
+noisy_image1.jpg
 ```
 cd python
-/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter.py ../resources/sp_img_gray_noise_heavy.png
-/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_jit.py ../resources/sp_img_gray_noise_heavy.png
-/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_multi.py ../resources/sp_img_gray_noise_heavy.png
-/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_opencv.py ../resources/sp_img_gray_noise_heavy.png
-/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda.py ../resources/sp_img_gray_noise_heavy.png
-/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda_multi.py ../resources/sp_img_gray_noise_heavy.png
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter.py ../resources/noisy_image1.jpg
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_jit.py ../resources/noisy_image1.jpg
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_multi.py ../resources/noisy_image1.jpg
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_opencv.py ../resources/noisy_image1.jpg
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda.py ../resources/noisy_image1.jpg
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda_multi.py ../resources/noisy_image1.jpg
 /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda_opt.py ../resources/noisy_image1.jpg
 
 
