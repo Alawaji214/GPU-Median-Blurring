@@ -80,7 +80,7 @@ output of nvidia-smi
 | N/A   47C    P8    17W /  72W |      0MiB / 23034MiB |      0%      Default |
 |                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
-                                                                       
+                                                                     
 +-----------------------------------------------------------------------------+
 | Processes:                                                                  |
 |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
@@ -155,7 +155,7 @@ nsys profile --stats=true ./cuda_median
 | OpenCV     |            |             |                   |
 | Seq C      | 153 sec    |             |                   |
 | Seq Python |            |             |                   |
-| CUDA C     | 0.132 sec  | 0.084 sec   | 0.048 sec         |
+| CUDA C     | 0.053 sec  | 0.046 sec   | 0.007 sec         |
 | OpenACC    | 0.256 sec  | 0.231 sec   | 0.026 sec         |
 | CUDA Pythn | 0.258 sec  |             |                   |
 
