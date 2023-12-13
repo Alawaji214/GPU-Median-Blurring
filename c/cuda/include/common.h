@@ -2,6 +2,7 @@
 #define COMMMON_H
 
 #include "cuda.h"
+#include <cuda_runtime.h>
 
 #define CHECK_LAST_CUDA_ERROR() checkLast(__FILE__, __LINE__)
 void checkLast(const char* const file, const int line);

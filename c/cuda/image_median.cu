@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
         cv::Mat channels[N_Channels], outputChannels[N_Channels];
 
         // GPU device source and destination matrices
+        u_int8_t *h_channels[N_Channels], *h_outputChannels[N_Channels];
         u_int8_t *d_channels[N_Channels], *d_outputChannels[N_Channels];
 
         // // Save the frame before filtering
@@ -48,28 +49,32 @@ int main(int argc, char *argv[]) {
         auto start_cp = high_resolution_clock::now();
 
         for (int c = 0; c < N_Channels; c++) {
-            cudaMallocManaged(&d_channels[c], sizeof(u_int8_t) * rows * cols);
+            cudaMallocHost(&h_channels[c], sizeof(u_int8_t) * rows * cols);
             CHECK_LAST_CUDA_ERROR();
-            cudaMallocManaged(&d_outputChannels[c], sizeof(u_int8_t) * rows * cols);
+            cudaMallocHost(&h_outputChannels[c], sizeof(u_int8_t) * rows * cols);
             CHECK_LAST_CUDA_ERROR();
 
-            if(channels[c].isContinuous()) {
-                cudaMemcpyAsync(d_channels[c], channels[c].data, sizeof(u_int8_t) * rows * cols, cudaMemcpyHostToDevice);
-                cudaMemPrefetchAsync(d_channels[c], sizeof(u_int8_t) * rows * cols, gpu_device);
-                CHECK_LAST_CUDA_ERROR();
-            }
-            else {
-                std::cout << "Error: Not Continuous" << std::endl;
-                exit(-1);
-            }
+            cudaMemcpy(h_channels[c], channels[c].data, sizeof(u_int8_t) * rows * cols, cudaMemcpyHostToHost);
+        }
+        std::cout << "Start: copying to device" << std::endl;
+        
+        for (int c = 0; c < N_Channels; c++) {
+            cudaMalloc(&d_channels[c], sizeof(u_int8_t) * rows * cols);
+            CHECK_LAST_CUDA_ERROR();
+            cudaMalloc(&d_outputChannels[c], sizeof(u_int8_t) * rows * cols);
+            CHECK_LAST_CUDA_ERROR();
+
+            cudaMemcpyAsync(d_channels[c], h_channels[c], sizeof(u_int8_t) * rows * cols, cudaMemcpyHostToDevice);
+            CHECK_LAST_CUDA_ERROR();
         }
         cudaDeviceSynchronize();
+
+        std::cout << "Start: kernal" << std::endl;
 
         auto start_mf = high_resolution_clock::now();
         // Apply median filter to each channel
         for (int i = 0; i < N_Channels; i++) {
             median_filter_driver(d_channels[i], d_outputChannels[i], rows, cols);
-            cudaMemPrefetchAsync(d_outputChannels[i], sizeof(u_int8_t) * rows * cols, cudaCpuDeviceId);
         }
         cudaDeviceSynchronize();
         CHECK_LAST_CUDA_ERROR();
@@ -77,15 +82,14 @@ int main(int argc, char *argv[]) {
 
         for (int i = 0; i < N_Channels; i++) {
             outputChannels[i] = cv::Mat(rows, cols, CV_8UC1);
-            if (!outputChannels[i].isContinuous()) {
-                std::cout << "Error: Not Continuous" << std::endl;
-                exit(-1);
-            }
-            cudaMemcpyAsync(outputChannels[i].data, d_outputChannels[i], sizeof(u_int8_t) * rows*cols, cudaMemcpyDeviceToHost);
+            cudaMemcpyAsync(h_outputChannels[i], d_outputChannels[i], sizeof(u_int8_t) * rows*cols, cudaMemcpyDeviceToHost);
             CHECK_LAST_CUDA_ERROR();
         }
         cudaDeviceSynchronize();
-
+        for (int i = 0; i < N_Channels; i++) {
+            cudaMemcpy(outputChannels[i].data, h_outputChannels[i], sizeof(u_int8_t) * rows*cols, cudaMemcpyHostToHost);
+            CHECK_LAST_CUDA_ERROR();
+        }
         auto end_cp = high_resolution_clock::now();
 
         // Merge the channels back
@@ -107,6 +111,10 @@ int main(int argc, char *argv[]) {
             cudaFree(d_channels[c]);
             CHECK_LAST_CUDA_ERROR();
             cudaFree(d_outputChannels[c]);
+            CHECK_LAST_CUDA_ERROR();
+            cudaFreeHost(h_channels[c]);
+            CHECK_LAST_CUDA_ERROR();
+            cudaFreeHost(h_outputChannels[c]);
             CHECK_LAST_CUDA_ERROR();
         }
     } catch(const cv::Exception& ex) {
