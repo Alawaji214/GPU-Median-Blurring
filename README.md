@@ -279,3 +279,8 @@ nsys profile --stats=true ./cuda_median
 | CUDA C     | 0.118 sec  | 0.001 sec   | 0.116 sec         |
 | OpenACC    | 1.367 ms   | 1.171 ms    | 0.042 ms          |
 | CUDA Pythn | 0.37 sec   |             |                   |
+
+
+## License
+
+This project is licensed under the terms of the custom license. See the [LICENSE](LICENSE) file for details.
