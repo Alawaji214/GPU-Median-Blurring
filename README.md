@@ -51,13 +51,12 @@ cd python
 /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_multi.py ../resources/sp_img_gray_noise_heavy.png
 /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_opencv.py ../resources/sp_img_gray_noise_heavy.png
 /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda.py ../resources/sp_img_gray_noise_heavy.png
-python median_filter_opencv.py ../resources/sp_img_gray_noise_heavy.png
-/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda_multi.py ../resources/python median_filter_opencv.py ../resources/sp_img_gray_noise_heavy.png
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda_multi.py ../resources/sp_img_gray_noise_heavy.png
 /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda_opt.py ../resources/noisy_image1.jpg
 
 
-nsys profile --stats=true python meidan_filter_vedio.py ../resources/video/videos_1_1080p.mp4
-nsys profile --stats=true python meidan_filter_vedio_cuda.py ../resources/video/videos_1_1080p.mp4
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python meidan_filter_vedio.py ../resources/video/videos_1_1080p.mp4
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python meidan_filter_vedio_cuda.py ../resources/video/videos_1_1080p.mp4
 ```
 
 ## Results
