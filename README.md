@@ -160,7 +160,7 @@ nsys profile --stats=true ./cuda_median
 | Seq Py Loc JIT  | 4.45 sec   |             |                   |
 | Seq Py Cloud    | 612 sec    |             |                   |
 | Seq Py Clo JIT  | 26 sec     |             |                   |
-| Seq Py opencv  | 0.08 sec   |             |                   |
+| Seq Py opencv   | 0.08 sec   |             |                   |
 | CUDA C          | 0.053 sec  | 0.046 sec   | 0.007 sec         |
 | OpenACC         | 0.256 sec  | 0.231 sec   | 0.026 sec         |
 | CUDA Pythn      | 0.77  sec  | 0.060 sec   | 0.026 sec         |
