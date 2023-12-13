@@ -48,8 +48,9 @@ nosiy image:
 noisy_image1.jpg
 ```
 cd python
-/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter.py ../resources/noisy_image1.jpg
-/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_jit.py ../resources/noisy_image1.jpg
+pwd
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true --output /home/bandr1994/COE506-Project/python/median_filter python median_filter.py ../resources/noisy_image1.jpg
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true --output /home/bandr1994/COE506-Project/python/median_filter python median_filter_jit.py ../resources/noisy_image1.jpg
 /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_multi.py ../resources/noisy_image1.jpg
 /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_opencv.py ../resources/noisy_image1.jpg
 /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python median_filter_cuda.py ../resources/noisy_image1.jpg
@@ -151,14 +152,17 @@ nsys profile --stats=true ./cuda_median
 
 ### noisy_image1
 
-| Method     | Total Time | Kernal Time | GPU Transfer Time |
-| ---------- | ---------- | ----------- | ----------------- |
-| OpenCV     |            |             |                   |
-| Seq C      | 153 sec    |             |                   |
-| Seq Python |            |             |                   |
-| CUDA C     | 0.053 sec  | 0.046 sec   | 0.007 sec         |
-| OpenACC    | 0.256 sec  | 0.231 sec   | 0.026 sec         |
-| CUDA Pythn | 0.258 sec  |             |                   |
+| Method          | Total Time | Kernal Time | GPU Transfer Time |
+| --------------- | ---------- | ----------- | ----------------- |
+| OpenCV          |            |             |                   |
+| Seq C           | 153 sec    |             |                   |
+| Seq Py Local    | 261 sec    |             |                   |
+| Seq Py Loc JIT  | 4.45 sec   |             |                   |
+| Seq Py Cloud    | 612 sec    |             |                   |
+| Seq Py Clo JIT  | 26 sec   |             |                   |
+| CUDA C          | 0.053 sec  | 0.046 sec   | 0.007 sec         |
+| OpenACC         | 0.256 sec  | 0.231 sec   | 0.026 sec         |
+| CUDA Pythn      | 0.258 sec  |             |                   |
 
 ### sp_img_gray_noise_heavy
 
