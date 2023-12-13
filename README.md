@@ -214,7 +214,7 @@ nsys profile --stats=true ./cuda_median
 | Method          | Total Time | Kernal Time | GPU Transfer Time |
 | --------------- | ---------- | ----------- | ----------------- |
 | OpenCV          |            |             |                   |
-| Seq C           |            |             |                   |
+| Seq C           | 152 sec    |             |                   |
 | Seq Py Local    |            |             |                   |
 | Seq Py Loc JIT  |            |             |                   |
 | Seq Py Cloud    |            |             |                   |
@@ -229,7 +229,7 @@ nsys profile --stats=true ./cuda_median
 | Method          | Total Time | Kernal Time | GPU Transfer Time |
 | --------------- | ---------- | ----------- | ----------------- |
 | OpenCV          |            |             |                   |
-| Seq C           |            |             |                   |
+| Seq C           | 250 sec    |             |                   |
 | Seq Py Local    |            |             |                   |
 | Seq Py Loc JIT  |            |             |                   |
 | Seq Py Cloud    |            |             |                   |
@@ -244,7 +244,7 @@ nsys profile --stats=true ./cuda_median
 | Method          | Total Time | Kernal Time | GPU Transfer Time |
 | --------------- | ---------- | ----------- | ----------------- |
 | OpenCV          |            |             |                   |
-| Seq C           |            |             |                   |
+| Seq C           | 0.344 sec  |             |                   |
 | Seq Py Local    |            |             |                   |
 | Seq Py Loc JIT  |            |             |                   |
 | Seq Py Cloud    |            |             |                   |
@@ -259,7 +259,7 @@ nsys profile --stats=true ./cuda_median
 | Method          | Total Time | Kernal Time | GPU Transfer Time |
 | --------------- | ---------- | ----------- | ----------------- |
 | OpenCV          |            |             |                   |
-| Seq C           |            |             |                   |
+| Seq C           | 0.58 sec   |             |                   |
 | Seq Py Local    |            |             |                   |
 | Seq Py Loc JIT  |            |             |                   |
 | Seq Py Cloud    |            |             |                   |
