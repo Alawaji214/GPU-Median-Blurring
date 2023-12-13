@@ -21,8 +21,21 @@ void applyMedianFilter(const cv::Mat& input, cv::Mat& output, int kernelSize) {
     }
 }
 
-int main() {
-    cv::Mat image = cv::imread("resources/image1.jpg", cv::IMREAD_COLOR);
+int main(int argc, char **argv) {
+    if (argc != 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " <ImageName>\n";
+        return 1;
+    }
+
+    std::string imagePath = "resources/" + std::string(argv[1]);
+    cv::Mat image = cv::imread(imagePath, cv::IMREAD_COLOR);
+
+    if (image.empty())
+    {
+        std::cerr << "Could not read the image: " << imagePath << std::endl;
+        return 1;
+    }
 
 
     cv::Mat frame, filteredFrame;

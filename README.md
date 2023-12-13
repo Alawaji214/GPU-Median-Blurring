@@ -208,6 +208,67 @@ nsys profile --stats=true ./cuda_median
 | OpenACC         | 0.256 sec  | 0.231 sec   | 0.026 sec         |
 | CUDA Pythn      | 0.77  sec  | 0.060 sec   | 0.026 sec         |
 
+
+### noisy_image2
+
+| Method          | Total Time | Kernal Time | GPU Transfer Time |
+| --------------- | ---------- | ----------- | ----------------- |
+| OpenCV          |            |             |                   |
+| Seq C           |            |             |                   |
+| Seq Py Local    |            |             |                   |
+| Seq Py Loc JIT  |            |             |                   |
+| Seq Py Cloud    |            |             |                   |
+| Seq Py Clo JIT  |            |             |                   |
+| Seq Py opencv   |            |             |                   |
+| CUDA C          |            |             |                   |
+| OpenACC         | 0.26040 sec| 0.23297 sec | 0.02743 sec       |
+| CUDA Pythn      |            |             |                   |
+
+### noisy_image3
+
+| Method          | Total Time | Kernal Time | GPU Transfer Time |
+| --------------- | ---------- | ----------- | ----------------- |
+| OpenCV          |            |             |                   |
+| Seq C           |            |             |                   |
+| Seq Py Local    |            |             |                   |
+| Seq Py Loc JIT  |            |             |                   |
+| Seq Py Cloud    |            |             |                   |
+| Seq Py Clo JIT  |            |             |                   |
+| Seq Py opencv   |            |             |                   |
+| CUDA C          |            |             |                   |
+| OpenACC         | 0.42392 sec| 0.37996 sec | 0.04396 sec       |
+| CUDA Pythn      |            |             |                   |
+
+### noisy_image4
+
+| Method          | Total Time | Kernal Time | GPU Transfer Time |
+| --------------- | ---------- | ----------- | ----------------- |
+| OpenCV          |            |             |                   |
+| Seq C           |            |             |                   |
+| Seq Py Local    |            |             |                   |
+| Seq Py Loc JIT  |            |             |                   |
+| Seq Py Cloud    |            |             |                   |
+| Seq Py Clo JIT  |            |             |                   |
+| Seq Py opencv   |            |             |                   |
+| CUDA C          |            |             |                   |
+| OpenACC         | 0.00067 sec| 0.00051 ec  | 0.00015 sec       |
+| CUDA Pythn      |            |             |                   |
+
+### noisy_image5
+
+| Method          | Total Time | Kernal Time | GPU Transfer Time |
+| --------------- | ---------- | ----------- | ----------------- |
+| OpenCV          |            |             |                   |
+| Seq C           |            |             |                   |
+| Seq Py Local    |            |             |                   |
+| Seq Py Loc JIT  |            |             |                   |
+| Seq Py Cloud    |            |             |                   |
+| Seq Py Clo JIT  |            |             |                   |
+| Seq Py opencv   |            |             |                   |
+| CUDA C          |            |             |                   |
+| OpenACC         | 0.00111 sec| 0.00088 sec | 0.00023 sec       |
+| CUDA Pythn      |            |             |                   |
+
 ### sp_img_gray_noise_heavy
 
 | Method     | Total Time | Kernal Time | GPU Transfer Time |
