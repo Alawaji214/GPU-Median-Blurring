@@ -33,6 +33,7 @@ add_executable( median median_filter.cpp )
 
 # Copy the refrence images to the binary folder
 file(COPY ../resources DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ../run_all_cuda.sh DESTINATION ${CMAKE_BINARY_DIR})
 
 # link with OpenCV
 include_directories( ${OpenCV_INCLUDE_DIRS} )
