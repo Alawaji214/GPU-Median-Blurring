@@ -9,6 +9,7 @@
 - Nvidia GPU ( this readme assumses Nvidia L4)
 
 #### Additional Requirements
+
 For building and running CUDA and OpenACC versions, ensure the following are installed:
 
 - [CUDA Toolkit (version 11.8 or above)](https://developer.nvidia.com/cuda-downloads)
@@ -17,12 +18,14 @@ For building and running CUDA and OpenACC versions, ensure the following are ins
 **Note**: Please make sure to add all dependencies to your PATH.
 
 #### OpenCV Installation
+
 install opencv library
 
 ```bash
 sudo apt install libopencv-dev
 ```
-#### Pything Libraries 
+
+#### Pything Libraries
 
 for python, you have to install opencv through pip
 
@@ -43,24 +46,30 @@ Navigate to the OpenACC directory:
 ```bash
 cd c/openacc
 ```
+
 compile the application
+
 ```bash
 nvc++ -acc -gpu=cc89 -Minfo=acc -I/usr/include/opencv4 -L/usr/lib -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui median_filter.cpp -o median_filter_gpu
 ./median_filter_gpu
 ```
+
 Or, for passing the image name as an argument:
 
 ```bash
 nvc++ -acc -gpu=cc89 -Minfo=acc -I/usr/include/opencv4 -L/usr/lib -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui median_filter_args.cpp -o median_filter_gpu_args
 ./median_filter_gpu_args <imageName>
 ```
+
 To profile the OpenACC application:
 
 ```bash
 Copy code
 nsys profile -t openacc -b dwarf --stats=true ./median_filter
 ```
+
 #### Cuda
+
 goto c directary and use cmake to build the application
 
 ```bash
@@ -89,6 +98,7 @@ g++ -std=c++11 -I/usr/local/include/opencv4  -L/usr/local/lib -lopencv_core -lop
 
 nosiy image:
 noisy_image1.jpg
+
 ```
 cd python
 pwd
@@ -125,7 +135,7 @@ output of nvidia-smi
 | N/A   47C    P8    17W /  72W |      0MiB / 23034MiB |      0%      Default |
 |                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
-                                                                     
+                                                                   
 +-----------------------------------------------------------------------------+
 | Processes:                                                                  |
 |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
@@ -195,79 +205,68 @@ nsys profile --stats=true ./cuda_median
 
 ### noisy_image1
 
-| Method          | Total Time | Kernal Time | GPU Transfer Time |
-| --------------- | ---------- | ----------- | ----------------- |
-| OpenCV          |            |             |                   |
-| Seq C           | 153 sec    |             |                   |
-| Seq Py Local    | 261 sec    |             |                   |
-| Seq Py Loc JIT  | 4.45 sec   |             |                   |
-| Seq Py Cloud    | 612 sec    |             |                   |
-| Seq Py Clo JIT  | 26 sec     |             |                   |
-| Seq Py opencv   | 0.08 sec   |             |                   |
-| CUDA C          | 0.053 sec  | 0.046 sec   | 0.007 sec         |
-| OpenACC         | 0.256 sec  | 0.231 sec   | 0.026 sec         |
-| CUDA Pythn      | 0.77  sec  | 0.060 sec   | 0.026 sec         |
-
+| Method         | Total Time | Kernal Time | GPU Transfer Time |
+| -------------- | ---------- | ----------- | ----------------- |
+| OpenCV         |            |             |                   |
+| Seq C          | 153 sec    |             |                   |
+| Seq Py Cloud   | 612 sec    |             |                   |
+| Seq Py Clo JIT | 26 sec     |             |                   |
+| Seq Py opencv  | 0.08 sec   |             |                   |
+| CUDA C         | 0.053 sec  | 0.046 sec   | 0.007 sec         |
+| OpenACC        | 0.256 sec  | 0.231 sec   | 0.026 sec         |
+| CUDA Pythn     | 0.77  sec  | 0.060 sec   | 0.026 sec         |
 
 ### noisy_image2
 
-| Method          | Total Time | Kernal Time | GPU Transfer Time |
-| --------------- | ---------- | ----------- | ----------------- |
-| OpenCV          |            |             |                   |
-| Seq C           | 152 sec    |             |                   |
-| Seq Py Local    |            |             |                   |
-| Seq Py Loc JIT  |            |             |                   |
-| Seq Py Cloud    |            |             |                   |
-| Seq Py Clo JIT  |            |             |                   |
-| Seq Py opencv   |            |             |                   |
-| CUDA C          |            |             |                   |
-| OpenACC         | 0.26040 sec| 0.23297 sec | 0.02743 sec       |
-| CUDA Pythn      |            |             |                   |
+| Method         | Total Time  | Kernal Time | GPU Transfer Time |
+| -------------- | ----------- | ----------- | ----------------- |
+| OpenCV         |             |             |                   |
+| Seq C          | 152 sec     |             |                   |
+| Seq Py Cloud   |             |             |                   |
+| Seq Py Clo JIT |             |             |                   |
+| Seq Py opencv  |             |             |                   |
+| CUDA C         | 0.06409 sec | 0.05772 sec | 0.00637 sec       |
+| OpenACC        | 0.26040 sec | 0.23297 sec | 0.02743 sec       |
+| CUDA Pythn     |             |             |                   |
 
 ### noisy_image3
 
-| Method          | Total Time | Kernal Time | GPU Transfer Time |
-| --------------- | ---------- | ----------- | ----------------- |
-| OpenCV          |            |             |                   |
-| Seq C           | 250 sec    |             |                   |
-| Seq Py Local    |            |             |                   |
-| Seq Py Loc JIT  |            |             |                   |
-| Seq Py Cloud    |            |             |                   |
-| Seq Py Clo JIT  |            |             |                   |
-| Seq Py opencv   |            |             |                   |
-| CUDA C          |            |             |                   |
-| OpenACC         | 0.42392 sec| 0.37996 sec | 0.04396 sec       |
-| CUDA Pythn      |            |             |                   |
+| Method         | Total Time  | Kernal Time  | GPU Transfer Time |
+| -------------- | ----------- | ------------ | ----------------- |
+| OpenCV         |             |              |                   |
+| Seq C          | 250 sec     |              |                   |
+| Seq Py Cloud   |             |              |                   |
+| Seq Py Clo JIT |             |              |                   |
+| Seq Py opencv  |             |              |                   |
+| CUDA C         | 0.10428 sec | 0.09386 sec | 0.01042 sec       |
+| OpenACC        | 0.42392 sec | 0.37996 sec  | 0.04396 sec       |
+| CUDA Pythn     |             |              |                   |
 
 ### noisy_image4
 
-| Method          | Total Time | Kernal Time | GPU Transfer Time |
-| --------------- | ---------- | ----------- | ----------------- |
-| OpenCV          |            |             |                   |
-| Seq C           | 0.344 sec  |             |                   |
-| Seq Py Local    |            |             |                   |
-| Seq Py Loc JIT  |            |             |                   |
-| Seq Py Cloud    |            |             |                   |
-| Seq Py Clo JIT  |            |             |                   |
-| Seq Py opencv   |            |             |                   |
-| CUDA C          |            |             |                   |
-| OpenACC         | 0.00067 sec| 0.00051 ec  | 0.00015 sec       |
-| CUDA Pythn      |            |             |                   |
+| Method         | Total Time  | Kernal Time  | GPU Transfer Time |
+| -------------- | ----------- | ------------ | ----------------- |
+| OpenCV         |             |              |                   |
+| Seq C          | 0.344 sec   |              |                   |
+| Seq Py Cloud   |             |              |                   |
+| Seq Py Clo JIT |             |              |                   |
+| Seq Py opencv  |             |              |                   |
+| CUDA C         | 0.00019 sec | 0.00017 sec | 0.00002 sec      |
+| OpenACC        | 0.00067 sec | 0.00051 sec  | 0.00015 sec       |
+| CUDA Pythn     |             |              |                   |
 
 ### noisy_image5
 
-| Method          | Total Time | Kernal Time | GPU Transfer Time |
-| --------------- | ---------- | ----------- | ----------------- |
-| OpenCV          |            |             |                   |
-| Seq C           | 0.58 sec   |             |                   |
-| Seq Py Local    |            |             |                   |
-| Seq Py Loc JIT  |            |             |                   |
-| Seq Py Cloud    |            |             |                   |
-| Seq Py Clo JIT  |            |             |                   |
-| Seq Py opencv   |            |             |                   |
-| CUDA C          |            |             |                   |
-| OpenACC         | 0.00111 sec| 0.00088 sec | 0.00023 sec       |
-| CUDA Pythn      |            |             |                   |
+| Method         | Total Time  | Kernal Time | GPU Transfer Time |
+| -------------- | ----------- | ----------- | ----------------- |
+| OpenCV         |             |             |                   |
+| Seq C          | 0.58 sec    |             |                   |
+| Seq Py Cloud   |             |             |                   |
+| Seq Py Clo JIT |             |             |                   |
+| Seq Py opencv  |             |             |                   |
+| CUDA C         | 0.00035 sec | 0.00032 sec | 0.00003 sec       |
+| OpenACC        | 0.00111 sec | 0.00088 sec | 0.00023 sec       |
+| CUDA Pythn     |             |             |                   |
 
 ### sp_img_gray_noise_heavy
 
@@ -279,7 +278,6 @@ nsys profile --stats=true ./cuda_median
 | CUDA C     | 0.118 sec  | 0.001 sec   | 0.116 sec         |
 | OpenACC    | 1.367 ms   | 1.171 ms    | 0.042 ms          |
 | CUDA Pythn | 0.37 sec   |             |                   |
-
 
 ## License
 
