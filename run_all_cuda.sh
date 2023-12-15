@@ -13,7 +13,7 @@ do
   echo "Processing ${input_image}"
 
   # Run nsys profile
-  nsys profile --stats=true -o profile${i} ./${program} ${input_image}  2>&1 
+  /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true -o profile${i} ./${program} ${input_image}  2>&1 
 
   echo "-------------------------"
 done
