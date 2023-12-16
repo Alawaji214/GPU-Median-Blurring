@@ -115,6 +115,16 @@ pwd
 /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true python meidan_filter_vedio_cuda.py ../resources/video/videos_1_1080p.mp4
 ```
 
+```
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true --output /home/bandr1994/COE506-Project/python/median_filter_cuda python median_filter_cuda.py ../resources/noisy_image2.jpg
+
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true --output /home/bandr1994/COE506-Project/python/median_filter_cuda python median_filter_cuda.py ../resources/noisy_image3.jpg
+
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true --output /home/bandr1994/COE506-Project/python/median_filter_cuda python median_filter_cuda.py ../resources/noisy_image4.jpg
+
+/opt/nvidia/hpc_sdk/Linux_x86_64/23.11/compilers/bin/nsys profile --stats=true --output /home/bandr1994/COE506-Project/python/median_filter_cuda python median_filter_cuda.py ../resources/noisy_image5.jpg
+```
+
 ## Results
 
 ### Used GPU
