@@ -209,12 +209,9 @@ nsys profile --stats=true ./cuda_median
 | -------------- | ---------- | ----------- | ----------------- |
 | OpenCV         |            |             |                   |
 | Seq C          | 153 sec    |             |                   |
-| Seq Py Cloud   | 612 sec    |             |                   |
-| Seq Py Clo JIT | 26 sec     |             |                   |
-| Seq Py opencv  | 0.08 sec   |             |                   |
 | CUDA C         | 0.053 sec  | 0.046 sec   | 0.007 sec         |
 | OpenACC        | 0.256 sec  | 0.231 sec   | 0.026 sec         |
-| CUDA Pythn     | 0.77  sec  | 0.060 sec   | 0.026 sec         |
+| CUDA Pythn     | 0.086 sec  | 0.060 sec   | 0.026 sec         |
 
 ### noisy_image2
 
@@ -222,9 +219,6 @@ nsys profile --stats=true ./cuda_median
 | -------------- | ----------- | ----------- | ----------------- |
 | OpenCV         |             |             |                   |
 | Seq C          | 152 sec     |             |                   |
-| Seq Py Cloud   |             |             |                   |
-| Seq Py Clo JIT |             |             |                   |
-| Seq Py opencv  |             |             |                   |
 | CUDA C         | 0.06409 sec | 0.05772 sec | 0.00637 sec       |
 | OpenACC        | 0.26040 sec | 0.23297 sec | 0.02743 sec       |
 | CUDA Pythn     |             |             |                   |
@@ -235,9 +229,6 @@ nsys profile --stats=true ./cuda_median
 | -------------- | ----------- | ------------ | ----------------- |
 | OpenCV         |             |              |                   |
 | Seq C          | 250 sec     |              |                   |
-| Seq Py Cloud   |             |              |                   |
-| Seq Py Clo JIT |             |              |                   |
-| Seq Py opencv  |             |              |                   |
 | CUDA C         | 0.10428 sec | 0.09386 sec | 0.01042 sec       |
 | OpenACC        | 0.42392 sec | 0.37996 sec  | 0.04396 sec       |
 | CUDA Pythn     |             |              |                   |
@@ -248,9 +239,6 @@ nsys profile --stats=true ./cuda_median
 | -------------- | ----------- | ------------ | ----------------- |
 | OpenCV         |             |              |                   |
 | Seq C          | 0.344 sec   |              |                   |
-| Seq Py Cloud   |             |              |                   |
-| Seq Py Clo JIT |             |              |                   |
-| Seq Py opencv  |             |              |                   |
 | CUDA C         | 0.00019 sec | 0.00017 sec | 0.00002 sec      |
 | OpenACC        | 0.00067 sec | 0.00051 sec  | 0.00015 sec       |
 | CUDA Pythn     |             |              |                   |
@@ -261,9 +249,6 @@ nsys profile --stats=true ./cuda_median
 | -------------- | ----------- | ----------- | ----------------- |
 | OpenCV         |             |             |                   |
 | Seq C          | 0.58 sec    |             |                   |
-| Seq Py Cloud   |             |             |                   |
-| Seq Py Clo JIT |             |             |                   |
-| Seq Py opencv  |             |             |                   |
 | CUDA C         | 0.00035 sec | 0.00032 sec | 0.00003 sec       |
 | OpenACC        | 0.00111 sec | 0.00088 sec | 0.00023 sec       |
 | CUDA Pythn     |             |             |                   |
@@ -274,7 +259,6 @@ nsys profile --stats=true ./cuda_median
 | ---------- | ---------- | ----------- | ----------------- |
 | OpenCV     |            |             |                   |
 | Seq C      | 0.73 sec   |             |                   |
-| Seq Python | 2.8 sec    |             |                   |
 | CUDA C     | 0.118 sec  | 0.001 sec   | 0.116 sec         |
 | OpenACC    | 1.367 ms   | 1.171 ms    | 0.042 ms          |
 | CUDA Pythn | 0.37 sec   |             |                   |
