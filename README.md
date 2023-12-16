@@ -239,7 +239,7 @@ nsys profile --stats=true ./cuda_median
 | -------------- | ----------- | ------------ | ----------------- |
 | OpenCV         |             |              |                   |
 | Seq C          | 250 sec     |              |                   |
-| CUDA C         | 0.10428 sec | 0.09386 sec  | 0.01042 sec        |
+| CUDA C         | 0.10428 sec | 0.09386 sec  | 0.01042 sec       |
 | OpenACC        | 0.42392 sec | 0.37996 sec  | 0.04396 sec       |
 | CUDA Pythn     | 0.13956 sec | 0.09770 sec  | 0.04186 sec       |
 
@@ -249,9 +249,9 @@ nsys profile --stats=true ./cuda_median
 | -------------- | ----------- | ------------ | ----------------- |
 | OpenCV         |             |              |                   |
 | Seq C          | 0.344 sec   |              |                   |
-| CUDA C         | 0.00019 sec | 0.00017 sec | 0.00002 sec      |
+| CUDA C         | 0.00019 sec | 0.00017 sec  | 0.00002 sec       |
 | OpenACC        | 0.00067 sec | 0.00051 sec  | 0.00015 sec       |
-| CUDA Pythn     |             |              |                   |
+| CUDA Pythn     | 0.00022 sec | 0.00020 sec  | 0.00002 sec       |
 
 ### noisy_image5
 
@@ -261,7 +261,7 @@ nsys profile --stats=true ./cuda_median
 | Seq C          | 0.58 sec    |             |                   |
 | CUDA C         | 0.00035 sec | 0.00032 sec | 0.00003 sec       |
 | OpenACC        | 0.00111 sec | 0.00088 sec | 0.00023 sec       |
-| CUDA Pythn     |             |             |                   |
+| CUDA Pythn     | 0.00028 sec | 0.00025 sec | 0.00003 sec       
 
 ### sp_img_gray_noise_heavy
 
