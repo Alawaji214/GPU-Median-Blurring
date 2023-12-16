@@ -1,4 +1,4 @@
-# COE506-Project
+# GPU Median Blurring
 
 ## Building
 
