@@ -231,7 +231,7 @@ nsys profile --stats=true ./cuda_median
 | Seq C          | 152 sec     |             |                   |
 | CUDA C         | 0.06409 sec | 0.05772 sec | 0.00637 sec       |
 | OpenACC        | 0.26040 sec | 0.23297 sec | 0.02743 sec       |
-| CUDA Pythn     |             |             |                   |
+| CUDA Pythn     | 0.08495 sec | 0.05970 sec | 0.02525 sec       |
 
 ### noisy_image3
 
@@ -239,9 +239,9 @@ nsys profile --stats=true ./cuda_median
 | -------------- | ----------- | ------------ | ----------------- |
 | OpenCV         |             |              |                   |
 | Seq C          | 250 sec     |              |                   |
-| CUDA C         | 0.10428 sec | 0.09386 sec | 0.01042 sec       |
+| CUDA C         | 0.10428 sec | 0.09386 sec  | 0.01042 sec        |
 | OpenACC        | 0.42392 sec | 0.37996 sec  | 0.04396 sec       |
-| CUDA Pythn     |             |              |                   |
+| CUDA Pythn     | 0.13956 sec | 0.09770 sec  | 0.04186 sec       |
 
 ### noisy_image4
 
@@ -271,7 +271,7 @@ nsys profile --stats=true ./cuda_median
 | Seq C      | 0.73 sec   |             |                   |
 | CUDA C     | 0.118 sec  | 0.001 sec   | 0.116 sec         |
 | OpenACC    | 1.367 ms   | 1.171 ms    | 0.042 ms          |
-| CUDA Pythn | 0.37 sec   |             |                   |
+| CUDA Pythn | 0.429 ms   | 0.208 ms    | 0.021 ms          |
 
 ## License
 
